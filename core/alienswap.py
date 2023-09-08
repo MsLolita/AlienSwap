@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, randint
 
 import requests
 import tls_client
@@ -19,8 +19,6 @@ from inputs.config import (
 
 
 class AlienSwap(Web3Utils):
-    referral = None
-
     def __init__(self, private_key: str, proxy: str = None):
         Web3Utils.__init__(self, key=private_key)
 
@@ -112,7 +110,7 @@ class AlienSwap(Web3Utils):
         return response.json()
 
     def logs(self, file_name: str, msg_result: str):
-        file_msg = f"{self.acct.address}|{self.acct.key}|{self.proxy}"
+        file_msg = f"{self.acct.address}|{self.acct.key.hex()}|{self.proxy}"
         str_to_file(f"./logs/{file_name}.txt", file_msg)
         if file_name == "success":
             logger.success(f"{self.acct.address} | {msg_result}")
